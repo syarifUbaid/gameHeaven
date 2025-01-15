@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>menu</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script src="src/app.js" async></script>
+  </head>
+  <body>
+    <!-- Navbar start -->
+    <nav class="navbar" x-data>
+      <a href="#" class="navbar-logo">Game<span>Heaven</span>.</a>
+
+      <div class="navbar-nav">
+        <a href="./index.html">Home</a>
+        <a href="#about">Tentang Kami</a>
+        <a href="#topUp">TopUp Diamond</a>
+        <a href="#pameranAkun">Pameran Akun</a>
+        <a href="./menu.html">Aksesoris Game</a>
+        <a href="#contact">Kontak</a>
+      </div>
+
+      <div class="navbar-extra">
+        <a href="#" id="shopping-cart-button">
+          <i data-feather="shopping-cart"></i>
+          <span class="qty-note" x-text="$store.cart.qty"></span>
+        </a>
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+      </div>
+
+      <!-- Shopping Cart start -->
+      <div class="shopping-cart">
+        <template x-for="(item , index) in $store.cart.items" x-key="index">
+          <div class="cart-item">
+            <img :src="`img/menu/${item.img}`" :alt="item.name" />
+            <div class="item-detail">
+              <h3 x-text="item.name"></h3>
+              <div class="item-price">
+                <span x-text="rupiah(item.price)"></span>
+                <button id="remove" @click="$store.cart.remove(item.id)">
+                  &minus;
+                </button>
+                <span x-text="item.qty"></span>
+                <button id="add" @click="$store.cart.add(item)">&plus;</button
+                >&equals;
+                <span x-text="rupiah(item.total)"></span>
+              </div>
+            </div>
+          </div>
+        </template>
+        <h4 x-show="!$store.cart.items.length" style="margin-top: 1rem">
+          Belanjaan Anda Masih Kosong!!!
+        </h4>
+        <h4 x-show="$store.cart.items.length">
+          Total : <span x-text="rupiah($store.cart.total)"></span>
+        </h4>
+        <div class="form-container">
+          <button
+            class="checkout-button"
+            type="button"
+            id="checkout-button"
+            x-show="$store.cart.items.length"
+            @click="$store.cart.chekout()"
+          >
+            Checkout
+          </button>
+        </div>
+      </div>
+      <!-- Shopping Cart end -->
+    </nav>
+    <!-- Navbar end -->
+    <!-- Hero Section start -->
+    <section class="hero" id="home">
+      <div class="mask-container">
+        <main class="content">
+          <h1>Gaming Tanpa Batas <span>Semua ada di Sini</span></h1>
+        </main>
+      </div>
+    </section>
+    <!-- Hero Section end -->
+
+    <!-- About Section start -->
+    <section id="about" class="about">
+      <h2><span>Tentang</span> Kami</h2>
+
+      <div class="row">
+        <div class="about-img">
+          <img src="img/tentang-kami.jpeg" alt="Tentang Kami" />
+        </div>
+        <div class="content">
+          <p>
+            Selamat datang di Game Heaven, rumah bagi semua kebutuhan gaming Anda! Kami menyediakan layanan top-up game, jual akun, dan aksesoris gaming dengan harga bersaing, transaksi cepat, dan keamanan terjamin.
+          </p>
+          <h3>Kenapa memilih produk kami?</h3>
+          <p>
+            Kami berdiri dengan tujuan untuk mendukung komunitas gamer di Indonesia, kami berkomitmen memberikan layanan terbaik yang akan meningkatkan pengalaman bermain Anda. Dengan tim yang berpengalaman dan berdedikasi, kami memahami apa yang dibutuhkan oleh para gamer.
+            Bergabunglah dengan ribuan pelanggan setia kami dan rasakan sendiri kenyamanan serta kualitas layanan kami. Karena bagi kami, gaming bukan hanya hobi melainkan adalah gaya hidup!"
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- About Section end -->
+
+    <!-- TopUp Diamond start -->
+     <section id="topUp" class="menu">
+       <h2><span>TopUp </span>Diamond</h2>
+       <form id="topupForm">
+         <label for="game">Game:</label>
+         <select id="game" required>
+           <option value="" disabled selected>Pilih Game</option>
+           <option value="Mobile Legends">Mobile Legends</option>
+           <option value="Free Fire">Free Fire</option>
+           <option value="PUBG Mobile">PUBG Mobile</option>
+         </select>
+     
+         <label for="idUser">ID Pengguna:</label>
+         <input type="text" id="idUser" placeholder="Masukkan ID Pengguna" required>
+     
+         <label for="diamond">Jumlah Diamond:</label>
+         <select id="diamond" required>
+           <option value="" disabled selected>Pilih Jumlah Diamond</option>
+           <option value="100">100 Diamond</option>
+           <option value="200">200 Diamond</option>
+           <option value="500">500 Diamond</option>
+         </select>
+     
+         <label for="name">Nama Pemesan:</label>
+         <input type="text" id="name" placeholder="Masukkan Nama Anda" required>
+     
+         <button type="button" onclick="submitOrder()">Pesan Sekarang</button>
+       </form>     
+     </section>
+    <!-- TopUp Diamond end -->
+
+    <!-- Pameran Akun start -->
+    <section id="pameranAkun" class="menu" x-data="pameranAkun">
+      <h2><span>Pameran</span> Akun</h2>
+
+      <div class="row">
+        <template x-for="(item, index) in items " x-key="index">
+          <div class="menu-card">
+            <button @click.prevent="$store.cart.add(item)">
+              <img
+                :src="`img/menu/${item.img}`"
+                :alt="item.name"
+                class="menu-card-img"
+              />
+            </button>
+            <h3 class="menu-card-title">
+              - <span x-text="item.name"></span> -
+            </h3>
+            <p class="menu-card-price" x-text="rupiah(item.price)"></p>
+          </div>
+        </template>
+      </div>
+    </section>
+    <!-- Pameran Akun end -->
+
+    <!-- Footer start -->
+    <footer>
+      <div class="socials">
+        <a href="#"><i data-feather="instagram"></i></a>
+      </div>
+
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#about">Tentang Kami</a>
+        <a href="#menu">Menu</a>
+        <a href="#contact">Kontak</a>
+      </div>
+
+      <div class="credit">
+        <p>Created by <a href="">gameHeaven</a>. | &copy; 2025.</p>
+      </div>
+    </footer>
+    <!-- Footer end -->
+    <!-- Feather Icons -->
+    <script>
+      feather.replace();
+    </script>
+
+    <!-- My Javascript -->
+    <script src="js/script.js"></script>
+  </body>
+</html>
